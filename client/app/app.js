@@ -7,7 +7,8 @@ angular.module('toDoApp', [
   'ngRoute',
   'ui.bootstrap',
   'ngAnimate',
-  'ngMaterial'
+  'ngMaterial',
+  'ngMessages'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
