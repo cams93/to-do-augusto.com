@@ -1,14 +1,42 @@
+<head>
+  <!-- ... -->
+  <script type="text/javascript" src="/bower_components/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+</head>
+
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
+    <h1>To-Do</h1>
+    <p class="lead">Web application to manage your tasks</p>
     <img src="assets/images/yeoman.png" alt="I'm Yeoman">
   </div>
 </header>
 
 <div class="container">
+  <div class="row">
+    <p></p>
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+      <div class="input-group-btn">
+        <input type="text" class="form-control" aria-label="Text input with multiple buttons" placeholder="Add note">
+        <input type="text" class="form-control" id="date" placeholder="Date">
+      </div>
+      <script type="text/javascript">
+        $(function calendar() {
+          $('#date').datetimepicker({
+          });
+        });
+      </script>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Features:</h1>
