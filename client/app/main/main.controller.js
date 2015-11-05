@@ -21,15 +21,28 @@ angular.module('toDoApp')
     };
   });
 
-angular.module('toDoApp').controller('AppCtrl', function($scope) {
-  $scope.myDate = new Date();
-  $scope.minDate = new Date(
-    $scope.myDate.getFullYear(),
-    $scope.myDate.getMonth() - 2,
-    $scope.myDate.getDate());
-  $scope.maxDate = new Date(
-    $scope.myDate.getFullYear(),
-    $scope.myDate.getMonth() + 2,
-    $scope.myDate.getDate());
-});
+angular
+  .module('toDoApp')
+  .controller('tasks', function($scope) {
+    $scope.task = {
+      title: 'hhhh',
+      description: '',
+      date: '',
+      category: ''
+    };
+    $scope.categories = ('Personal,Shopping,Work,Errands,Movies to watch')
+      .split(',').map(function(category) {
+      return {abbrev: category};
+    })
+  })
+  .config(function($mdThemingProvider) {
+    // Configure a dark theme with primary foreground yellow
+    $mdThemingProvider.theme('docs-grey', 'default')
+      .primaryPalette('blue')
+      .accentPalette('indigo')
+      .warnPalette('red')
+      .backgroundPalette('grey',{'default':'200'});
+  });
+
+
 

@@ -9,63 +9,54 @@
   </div>
 </header>
 
-<div class="container">
-  <div class="row">
-    <md-input-container>
-      this is the color: {{color}}
-      <label>Color</label>
-      <input type="text" ng-model="color" required md-maxlength="10">
-    </md-input-container>
+<p></p>
+<p></p>
 
+<div layout="row" layout-wrap>
+  <div flex="25">
 
-    <div ng-controller="AppCtrl" style="padding: 40px;" ng-cloak="" class="datepickerdemoBasicUsage" ng-app="toDoApp">
-      <md-content>
-
-        <h4>Standard date-picker</h4>
-        <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
-
-        <h4>Disabled date-picker</h4>
-        <md-datepicker ng-model="myDate" md-placeholder="Enter date" disabled=""></md-datepicker>
-
-        <h4>Date-picker with min date and max date</h4>
-        <md-datepicker ng-model="myDate" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
-
-        <h4>With ngMessages</h4>
-        <form name="myForm">
-          <md-datepicker name="dateField" ng-model="myDate" md-placeholder="Enter date" required="" md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
-
-          <div class="validation-messages" ng-messages="myForm.dateField.$error">
-            <div ng-message="required">This date is required!</div>
-            <div ng-message="mindate">Date is too early!</div>
-            <div ng-message="maxdate">Date is too late!</div>
+  </div>
+  <div flex="50">
+    <div ng-controller="tasks" layout="column" ng-cloak class="md-inline-form">
+      <md-content md-theme="docs-grey" layout-padding layout="column" layout-sm="column">
+        <div layout="row">
+          <md-input-container style="margin-bottom: 0px;" flex>
+            <label>Title</label>
+            <input ng-model="task.title">
+          </md-input-container>
+          <div layout layout-sm="column">
+            <md-datepicker ng-model="task.date" md-placeholder="Enter date"></md-datepicker>
           </div>
-        </form>
+        </div>
+        <div layout="row">
+          <md-input-container class="md-block" style="margin-bottom: 0px;" flex>
+            <label>Description</label>
+            <textarea ng-model="task.description" columns="1"></textarea>
+          </md-input-container>
+        </div>
+        <div layout="row">
+          <md-input-container flex>
+            <label>Category</label>
+            <md-select ng-model="task.category">
+              <md-option ng-repeat="category in categories" value="{{category.abbrev}}">
+                {{category.abbrev}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-button>DONE</md-button>
+        </div>
       </md-content>
+      {{task.title}}
+      {{task.description}}
+      {{task.category}}
+      {{task.date}}
     </div>
-
-
+  </div>
+  <div flex="25">
   </div>
 </div>
 
 <div class="container">
-  <!--<div class="row">
-    <p></p>
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-6">
-      <div class="input-group-btn">
-        <input type="text" class="form-control" aria-label="Text input with multiple buttons" placeholder="Add note">
-        <input type="text" class="form-control" id="date" placeholder="Date">
-      </div>
-      <script type="text/javascript">
-        $(function calendar() {
-          $('#date').datetimepicker({
-          });
-        });
-      </script>
-    </div>
-    <div class="col-md-3"></div>
-  </div>-->
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Features:</h1>
