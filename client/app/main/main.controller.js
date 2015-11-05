@@ -24,16 +24,23 @@ angular.module('toDoApp')
 angular
   .module('toDoApp')
   .controller('tasks', function($scope) {
-    $scope.task = {
+    $scope.task = [{
       title: 'hhhh',
       description: '',
       date: '',
-      category: ''
-    };
+      category: '',
+      done: false
+    }];
     $scope.categories = ('Personal,Shopping,Work,Errands,Movies to watch')
       .split(',').map(function(category) {
       return {abbrev: category};
-    })
+    });
+    $scope.addtask = function(){
+      $scope.task.push({'title':$scope.newTask, description: '', date: '', category: '', 'done':false});
+      $scope.newTask = '';
+    };
+    $scope.deleteCompleted = function(){};
+
   })
   .config(function($mdThemingProvider) {
     // Configure a dark theme with primary foreground yellow

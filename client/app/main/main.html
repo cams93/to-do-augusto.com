@@ -14,42 +14,49 @@
 
 <div layout="row" layout-wrap>
   <div flex="25">
-
   </div>
   <div flex="50">
     <div ng-controller="tasks" layout="column" ng-cloak class="md-inline-form">
-      <md-content md-theme="docs-grey" layout-padding layout="column" layout-sm="column">
-        <div layout="row">
-          <md-input-container style="margin-bottom: 0px;" flex>
-            <label>Title</label>
-            <input ng-model="task.title">
-          </md-input-container>
-          <div layout layout-sm="column">
-            <md-datepicker ng-model="task.date" md-placeholder="Enter date"></md-datepicker>
+      <form name="form" ng-submit="addtask()">
+        <md-content md-theme="docs-grey" layout-padding layout="column" layout-sm="column">
+          <div layout="row">
+            <md-input-container style="margin-bottom: 0px;" flex>
+              <label>Title</label>
+              <input name="newTask" ng-model="newTask">
+            </md-input-container>
+            <div layout layout-sm="column">
+              <md-datepicker ng-model="task.date" md-placeholder="Enter date"></md-datepicker>
+            </div>
           </div>
-        </div>
-        <div layout="row">
-          <md-input-container class="md-block" style="margin-bottom: 0px;" flex>
-            <label>Description</label>
-            <textarea ng-model="task.description" columns="1"></textarea>
-          </md-input-container>
-        </div>
-        <div layout="row">
-          <md-input-container flex>
-            <label>Category</label>
-            <md-select ng-model="task.category">
-              <md-option ng-repeat="category in categories" value="{{category.abbrev}}">
-                {{category.abbrev}}
-              </md-option>
-            </md-select>
-          </md-input-container>
-          <md-button>DONE</md-button>
-        </div>
-      </md-content>
-      {{task.title}}
-      {{task.description}}
-      {{task.category}}
-      {{task.date}}
+          <div layout="row">
+            <md-input-container class="md-block" style="margin-bottom: 0px; height: auto;margin-top: 0px;" flex>
+              <label>Description</label>
+              <textarea ng-model="task.description" columns="1"></textarea>
+            </md-input-container>
+          </div>
+          <div layout="row">
+            <md-input-container flex style="margin-top: 9px;">
+              <label>Category</label>
+              <md-select ng-model="task.category">
+                <md-option ng-repeat="category in categories" value="{{category.abbrev}}">
+                  {{category.abbrev}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <md-button>DONE</md-button>
+          </div>
+        </md-content>
+        {{newTask}}
+        {{task.description}}
+        {{task.category}}
+        {{task.date}}
+        <ul>
+          <li ng-repeat="task in task">
+            <input type="checkbox" ng-model="task.done" />
+            <span>{{task.title}}</span>
+          </li>
+        </ul>
+      </form>
     </div>
   </div>
   <div flex="25">
