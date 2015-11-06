@@ -23,41 +23,71 @@ angular.module('toDoApp')
 
 angular
   .module('toDoApp')
-  .controller('tasks', function($scope, $mdDialog) {
+  .controller('tasks', function($scope, $mdDialog, $timeout, $mdSidenav, $log) {
     $scope.task = [{
       title: 'Hacer tarea de web',
       description: 'Desarrollar una aplicacion web para la clase',
-      date: '',
+      date: '2015-11-02T06:00:00.000Z',
       category: 'None',
       done: false
     },{
       title: 'Jugar xbox',
       description: 'Jugr el miercoles por la tarde',
-      date: '',
+      date: '2015-11-02T06:00:00.000Z',
       category: 'None',
       done: false
       },{
       title: 'Visitar a mi novia',
       description: 'Ir al parque y comer un helado',
-      date: '',
+      date: '2015-11-02T06:00:00.000Z',
       category: 'None',
       done: false
+      }
+      ,{
+        title: 'Jugar xbox',
+        description: 'Jugr el miercoles por la tarde',
+        date: '2015-11-02T06:00:00.000Z',
+        category: 'None',
+        done: false
+      },{
+        title: 'Visitar a mi novia',
+        description: 'Ir al parque y comer un helado',
+        date: '',
+        category: 'None',
+        done: false
+      }
+      ,{
+        title: 'Jugar xbox',
+        description: 'Jugr el miercoles por la tarde',
+        date: '',
+        category: 'None',
+        done: false
+      },{
+        title: 'Visitar a mi novia',
+        description: 'Ir al parque y comer un helado',
+        date: '',
+        category: 'None',
+        done: false
       }
     ];
     $scope.categories = ('None,Personal,Shopping,Work,Errands,Movies to watch')
       .split(',').map(function(category) {
-      return {abbrev: category};
+      return {cat: category};
     });
     $scope.addtask = function(){
-      if($scope.task.category=='' || $scope.task.category==undefined)
+
+      if(!$scope.task.title=='' || !$scope.task.title==undefined)
       {
-        $scope.task.category='None';
+        if($scope.task.category=='' || $scope.task.category==undefined)
+        {
+          $scope.task.category='None';
+        }
+        $scope.task.push({title:$scope.task.title, description:$scope.task.description, date:$scope.task.date, category:$scope.task.category, done:false});
+        $scope.task.title = '';
+        $scope.task.description = '';
+        $scope.task.date = '';
+        $scope.task.category = '';
       }
-      $scope.task.push({title:$scope.newTask, description:$scope.task.description, date:$scope.task.date, category:$scope.task.category, done:false});
-      $scope.newTask = '';
-      $scope.task.description = '';
-      $scope.task.date = '';
-      $scope.task.category = '';
     };
     $scope.deleteCompleted = function(){};
 
@@ -72,6 +102,50 @@ angular
       );
     };
 
+    $scope.toggleLeft = buildDelayedToggler('left');
+    $scope.toggleRight = buildToggler('right');
+    $scope.isOpenRight = function(){
+      return $mdSidenav('right').isOpen();
+    };
+    /**
+     * Supplies a function that will continue to operate until the
+     * time is up.
+     */
+    function debounce(func, wait, context) {
+      var timer;
+      return function debounced() {
+        var context = $scope,
+          args = Array.prototype.slice.call(arguments);
+        $timeout.cancel(timer);
+        timer = $timeout(function() {
+          timer = undefined;
+          func.apply(context, args);
+        }, wait || 10);
+      };
+    }
+    /**
+     * Build handler to open/close a SideNav; when animation finishes
+     * report completion in console
+     */
+    function buildDelayedToggler(navID) {
+      return debounce(function() {
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      }, 200);
+    }
+    function buildToggler(navID) {
+      return function() {
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      }
+    }
+
   })
   .config(function($mdThemingProvider) {
     // Configure a dark theme with primary foreground yellow
@@ -80,8 +154,20 @@ angular
       .accentPalette('indigo')
       .warnPalette('red')
       .backgroundPalette('grey',{'default':'100'});
+  })
+  .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+      $mdSidenav('left').close()
+        .then(function () {
+          //$log.debug("close LEFT is done");
+        });
+    };
+  })
+  .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+      $mdSidenav('right').close()
+        .then(function () {
+          //$log.debug("close RIGHT is done");
+        });
+    };
   });
-
-
-
-
