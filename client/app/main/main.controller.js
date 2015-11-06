@@ -23,23 +23,54 @@ angular.module('toDoApp')
 
 angular
   .module('toDoApp')
-  .controller('tasks', function($scope) {
+  .controller('tasks', function($scope, $mdDialog) {
     $scope.task = [{
-      title: 'hhhh',
-      description: '',
+      title: 'Hacer tarea de web',
+      description: 'Desarrollar una aplicacion web para la clase',
       date: '',
-      category: '',
+      category: 'None',
       done: false
-    }];
-    $scope.categories = ('Personal,Shopping,Work,Errands,Movies to watch')
+    },{
+      title: 'Jugar xbox',
+      description: 'Jugr el miercoles por la tarde',
+      date: '',
+      category: 'None',
+      done: false
+      },{
+      title: 'Visitar a mi novia',
+      description: 'Ir al parque y comer un helado',
+      date: '',
+      category: 'None',
+      done: false
+      }
+    ];
+    $scope.categories = ('None,Personal,Shopping,Work,Errands,Movies to watch')
       .split(',').map(function(category) {
       return {abbrev: category};
     });
     $scope.addtask = function(){
-      $scope.task.push({'title':$scope.newTask, description: '', date: '', category: '', 'done':false});
+      if($scope.task.category=='' || $scope.task.category==undefined)
+      {
+        $scope.task.category='None';
+      }
+      $scope.task.push({title:$scope.newTask, description:$scope.task.description, date:$scope.task.date, category:$scope.task.category, done:false});
       $scope.newTask = '';
+      $scope.task.description = '';
+      $scope.task.date = '';
+      $scope.task.category = '';
     };
     $scope.deleteCompleted = function(){};
+
+    $scope.doSecondaryAction = function(event) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .title('')
+          .content('')
+          .ariaLabel('')
+          .ok('Neat!')
+          .targetEvent(event)
+      );
+    };
 
   })
   .config(function($mdThemingProvider) {
@@ -48,8 +79,9 @@ angular
       .primaryPalette('blue')
       .accentPalette('indigo')
       .warnPalette('red')
-      .backgroundPalette('grey',{'default':'200'});
+      .backgroundPalette('grey',{'default':'100'});
   });
+
 
 
 
