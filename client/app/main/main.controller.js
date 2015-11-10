@@ -24,6 +24,7 @@ angular.module('toDoApp')
 angular
   .module('toDoApp')
   .controller('tasks', function($scope, $mdDialog, $timeout, $mdSidenav, $log) {
+
     $scope.task = [{
       title: 'Hacer tarea de web',
       description: 'Desarrollar una aplicacion web para la clase',
@@ -36,12 +37,6 @@ angular
       date: '2015-11-02T06:00:00.000Z',
       category: 'None',
       done: false
-      },{
-      title: 'Visitar a mi novia',
-      description: 'Ir al parque y comer un helado',
-      date: '2015-11-02T06:00:00.000Z',
-      category: 'None',
-      done: false
       }
       ,{
         title: 'Jugar xbox',
@@ -49,22 +44,10 @@ angular
         date: '2015-11-02T06:00:00.000Z',
         category: 'None',
         done: false
-      },{
-        title: 'Visitar a mi novia',
-        description: 'Ir al parque y comer un helado',
-        date: '',
-        category: 'None',
-        done: false
       }
       ,{
         title: 'Jugar xbox',
         description: 'Jugr el miercoles por la tarde',
-        date: '',
-        category: 'None',
-        done: false
-      },{
-        title: 'Visitar a mi novia',
-        description: 'Ir al parque y comer un helado',
         date: '',
         category: 'None',
         done: false
@@ -97,7 +80,7 @@ angular
           .title('')
           .content('')
           .ariaLabel('')
-          .ok('Neat!')
+          .ok('Done!')
           .targetEvent(event)
       );
     };
@@ -107,6 +90,30 @@ angular
     $scope.isOpenRight = function(){
       return $mdSidenav('right').isOpen();
     };
+
+    $scope.toolTip = {
+      showTooltip : false,
+    };
+    $scope.toolTip2 = {
+      showTooltip : false,
+    };
+    $scope.toolTip3 = {
+      showTooltip : false,
+    };
+
+    $scope.showTabDialog = function(ev) {
+      $mdDialog.show({
+          controller: DialogController,
+          templateUrl: 'app/main/tabDialog.tmpl.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true
+        })
+        .then(function(answer) {
+            $scope.task.push({title:answer[0], description:answer[1], date:answer[2], category:answer[3], done:false});
+        });
+    };
+
     /**
      * Supplies a function that will continue to operate until the
      * time is up.
@@ -127,6 +134,7 @@ angular
      * Build handler to open/close a SideNav; when animation finishes
      * report completion in console
      */
+
     function buildDelayedToggler(navID) {
       return debounce(function() {
         $mdSidenav(navID)
@@ -145,7 +153,6 @@ angular
           });
       }
     }
-
   })
   .config(function($mdThemingProvider) {
     // Configure a dark theme with primary foreground yellow
@@ -171,3 +178,23 @@ angular
         });
     };
   });
+
+function DialogController($scope, $mdDialog) {
+  $scope.hide = function() {
+    $mdDialog.hide();
+  };
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  };
+  $scope.answer = function(answer) {
+    if(!answer[0]=='' || !answer[0]==undefined) {
+      $mdDialog.hide(answer);
+    }
+  };
+}
+
+
+
+
+
+

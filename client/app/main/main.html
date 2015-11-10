@@ -1,4 +1,6 @@
-
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
 <!--<div ng-include="'components/navbar/navbar.html'"></div>
 
 <header class="hero-unit" id="banner">
@@ -11,6 +13,7 @@
 
 <style>
   .material-icons.orange600 { color: #FB8C00; }
+  .material-icons.blue { color: #3F51B5; }
   md-sidenav,
   md-sidenav.md-locked-open,
   md-sidenav.md-closed.md-locked-open-add-active {
@@ -18,115 +21,191 @@
     width: 85vw !important;
     max-width: 400px !important;
   }
+  .topblock {
+    height: 64px;
+  }
+  .material-icons.md-18 { font-size: 18px; }
+  .material-icons.md-24 { font-size: 24px; }
+  .material-icons.md-36 { font-size: 36px; }
+  .material-icons.md-48 { font-size: 48px; }
+
+  #fixedbutton {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+  }
 </style>
 
-<div layout="row" layout-wrap>
-  <div flex="25">
-  </div>
-  <div flex="50">
-    <div ng-controller="tasks" layout="column" ng-cloak class="md-inline-form" style="height:700px;">
-      <form name="form" ng-submit="addtask()">
-        <md-content md-theme="docs-grey" layout-padding layout="column" layout-sm="column">
-          <div layout="row">
-            <md-input-container style="margin-bottom: 0px;" flex>
-              <label>Title</label>
-              <input name="newTask" ng-model="task.title" md-maxlength="36" required>
-            </md-input-container>
-            <div layout layout-sm="column">
-              <md-datepicker ng-model="task.date" md-placeholder="Enter date"></md-datepicker>
-            </div>
-          </div>
-          <div layout="row">
-            <md-input-container class="md-block" style="margin-bottom: 0px; height: auto;margin-top: 0px;" flex>
-              <label>Description</label>
-              <textarea ng-model="task.description" columns="1" md-maxlength="75"></textarea>
-            </md-input-container>
-          </div>
-          <div layout="row">
-            <md-input-container flex style="margin-top: 7px;">
-              <label>Category</label>
-              <md-select ng-model="task.category">
-                <md-option ng-repeat="category in categories" value="{{category.cat}}">
-                  {{category.cat}}
-                </md-option>
-              </md-select>
-            </md-input-container>
-            <md-button>DONE</md-button>
-          </div>
-        </md-content>
-      </form>
-      <div layout="row">
-        <md-subheader class="md-no-sticky" flex>My tasks</md-subheader>
-        <div layout layout-sm="column">
-          <md-subheader class="md-no-sticky">Remove completed</md-subheader>
-          <md-button class="md-icon-button">
-            <md-icon class="material-icons">delete</md-icon>
-          </md-button>
+
+<md-toolbar class="md-theme-indigo" style="position: fixed;">
+  <h1 class="md-toolbar-tools">To-Do</h1>
+</md-toolbar>
+
+<div class="topblock"></div>
+
+<body>
+  <div layout="row" layout-wrap  ng-controller="tasks">
+    <div flex="25" >
+      <div layout="row" layout-wrap>
+        <div flex="25">
+        </div>
+        <div flex="50">
+          <md-content>
+            <md-list style="padding-top: 65px; width: 220px; position: fixed;">
+              <md-divider></md-divider>
+              <md-list-item ng-click="toggleRight()">
+                <md-icon>inbox</md-icon>
+                <p>My Tasks</p>
+              </md-list-item>
+              <md-list-item ng-click="toggleRight()">
+                <md-icon>done</md-icon>
+                <p>Completed</p>
+              </md-list-item>
+              <md-divider></md-divider>
+            <md-list>
+          </md-content>
+        </div>
+        <div flex="25">
+
         </div>
       </div>
-      <md-content>
-        <md-list>
-          <md-divider></md-divider>
-          <md-list-item class="md-2-line" ng-repeat="task in task">
-            <md-checkbox class="md-primary" ng-model="task.done"></md-checkbox>
-            <div class="md-list-item-text">
-              <h3>{{task.title}}</h3>
-              <p>{{task.description}}</p>
-            </div>
-            <md-icon class="md-secondary" ng-click="toggleRight()" ng-hide="isOpenRight()" >more_horiz</md-icon>
-            <div class="md-list-item-text">
-              <p align=right style="padding-right: 40px;">{{task.date | date}}</p>
-            </div>
-            <!--<md-button ng-click="doSecondaryAction($event)">EDIT</md-button>-->
-            <md-divider></md-divider>
-          </md-list-item>
-        <md-list>
-      </md-content>
-
-      <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
-        <md-toolbar class="md-theme-light">
-          <h1 class="md-toolbar-tools">Edit Task</h1>
-        </md-toolbar>
-        <md-content ng-controller="RightCtrl" layout-padding>
-          <form>
-            <div layout="row">
-              <md-input-container flex>
-                <label>Title</label>
-                <input ng-model="task.title" md-maxlength="36" required>
-              </md-input-container>
-            </div>
-            <div layout="row">
-              <md-input-container class="md-block" flex>
-                <label>Description</label>
-                <textarea ng-model="task.description" columns="1" md-maxlength="75"></textarea>
-              </md-input-container>
-            </div>
-            <div layout="row">
-              <md-input-container flex>
-                <label>Category</label>
-                <md-select ng-model="task.category">
-                  <md-option ng-repeat="category in categories" value="{{category.cat}}">
-                    {{category.cat}}
-                  </md-option>
-                </md-select>
-              </md-input-container>
-              <div layout layout-sm="column">
-                <md-datepicker ng-model="task.date" md-placeholder="Enter date"></md-datepicker>
-              </div>
-            </div>
-          </form>
-          <md-button ng-click="close()" class="md-primary">
-            Close Sidenav Right
-          </md-button>
-        </md-content>
-      </md-sidenav>
-
     </div>
+    <div flex="50">
+      <md-card class="md-default-theme">
+        <div layout="row" layout-wrap>
+          <div flex="5">
+          </div>
+          <div flex="90">
+            <div layout="column" ng-cloak class="md-inline-form">
+              <!--<form name="form" ng-submit="addtask()">
+                <md-content layout-padding layout="column" layout-sm="column">
+                  <div layout="row">
+                    <md-input-container style="margin-bottom: 0px;" flex>
+                      <label>Title</label>
+                      <input name="newTask" ng-model="task.title" md-maxlength="36" required>
+                    </md-input-container>
+                    <div layout layout-sm="column">
+                      <md-datepicker ng-model="task.date" md-placeholder="Enter date"></md-datepicker>
+                    </div>
+                  </div>
+                  <div layout="row">
+                    <md-input-container class="md-block" style="margin-bottom: 0px; height: auto;margin-top: 0px;" flex>
+                      <label>Description</label>
+                      <textarea ng-model="task.description" columns="1" md-maxlength="75"></textarea>
+                    </md-input-container>
+                  </div>
+                  <div layout="row">
+                    <md-input-container flex style="margin-top: 7px;">
+                      <label>Category</label>
+                      <md-select ng-model="task.category">
+                        <md-option ng-repeat="category in categories" value="{{category.cat}}">
+                          {{category.cat}}
+                        </md-option>
+                      </md-select>
+                    </md-input-container>
+                    <md-button>DONE</md-button>
+                  </div>
+                </md-content>
+              </form>-->
+              <div layout="row" style="padding-top: 8px;">
+                
+                <md-subheader class="md-no-sticky" flex>My tasks</md-subheader>
+                <div layout layout-sm="column">
+                  <md-subheader class="md-no-sticky">Remove completed</md-subheader>
+                  <md-button class="md-icon-button">
+                    <md-icon class="material-icons">done</md-icon>
+                    <md-tooltip md-visible="toolTip.showTooltip">
+                      Remove Tasks Completed
+                    </md-tooltip>
+                  </md-button>
+                </div>
+              </div>
+              <md-content>
+                <md-list>
+                  <md-divider></md-divider>
+                  <md-list-item class="md-2-line" ng-repeat="task in task">
+                    <md-checkbox class="md-primary" ng-model="task.done"></md-checkbox>
+                    <div class="md-list-item-text">
+                      <h3>{{task.title}}</h3>
+                      <p>{{task.description}}</p>
+                    </div>
+                    <md-icon class="md-secondary" ng-click="toggleRight()" ng-hide="isOpenRight()" aria-label="options" >more_horiz</md-icon>
+                    <div class="md-list-item-text">
+                      <p align=right style="padding-right: 40px;">{{task.date | date}}</p>
+                    </div>
+                    <!--<md-button ng-click="doSecondaryAction($event)">EDIT</md-button>-->
+                    <md-divider></md-divider>
+                  </md-list-item>
+                <md-list>
+              </md-content>
 
+              <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+                <md-toolbar class="md-theme-light">
+                  <h1 class="md-toolbar-tools">Edit Task</h1>
+                </md-toolbar>
+                <md-content ng-controller="RightCtrl" layout-padding>
+                  <form>
+                    <div layout="row">
+                      <md-input-container flex>
+                        <label>Title</label>
+                        <input ng-model="task.title" md-maxlength="36" required>
+                      </md-input-container>
+                    </div>
+                    <div layout="row">
+                      <md-input-container class="md-block" flex>
+                        <label>Description</label>
+                        <textarea ng-model="task.description" columns="1" md-maxlength="75"></textarea>
+                      </md-input-container>
+                    </div>
+                    <div layout="row">
+                      <md-input-container flex>
+                        <label>Category</label>
+                        <md-select ng-model="task.category">
+                          <md-option ng-repeat="category in categories" value="{{category.cat}}">
+                            {{category.cat}}
+                          </md-option>
+                        </md-select>
+                      </md-input-container>
+                      <div layout layout-sm="column">
+                        <md-datepicker ng-model="task.date" md-placeholder="Enter date"></md-datepicker>
+                      </div>
+                      <md-button class="md-icon-button">
+                        <md-icon class="material-icons">delete</md-icon>
+                        <md-tooltip md-visible="toolTip.showTooltip2">
+                          Delete Task
+                        </md-tooltip>
+                      </md-button>
+                    </div>
+                  </form>
+                  <md-button ng-click="close()" class="md-primary">
+                    SAVE CHANGES
+                  </md-button>
+                  <md-button ng-click="close()" class="md-primary">
+                    CANCEL
+                  </md-button>
+                </md-content>
+              </md-sidenav>
+            </div>
+          </div>
+          <div flex="5">
+          </div>
+        </div>
+      </md-card>
+    </div>
+    <div flex="25">
+
+      <md-button class="md-icon-button" id="fixedbutton"  ng-click="showTabDialog($event)">
+        <md-icon-button class="material-icons md-48 blue">add_circle</md-icon-button>
+          <md-tooltip md-visible="toolTip.showTooltip3" md-direction="top">
+            Add New Task
+          </md-tooltip>
+      </md-button>
+    </div>
   </div>
-  <div flex="25">
-  </div>
-</div>
+</body>
+
+
+
 
 <!--<div class="container">
   <div class="row">
