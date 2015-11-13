@@ -53,28 +53,39 @@ angular
         done: false
       }
     ];
-    $scope.categories = ('None,Personal,Shopping,Work,Errands,Movies to watch')
-      .split(',').map(function(category) {
-      return {cat: category};
-    });
-    $scope.addtask = function(){
 
-      if(!$scope.task.title=='' || !$scope.task.title==undefined)
+    $scope.categories = [
+      {cat: 'Personal'},
+      {cat: 'Shopping'},
+      {cat: 'Work'},
+      {cat: 'Errands'},
+      {cat: 'Movies to watch'}
+      ];
+
+    $scope.addNewCategory = function() {
+      $scope.categories.push({cat:$scope.taskCategory});
+      $scope.taskCategory='';
+    };
+
+    //$scope.removeChoice = function() {
+    //  var lastItem = $scope.choices.length-1;
+    //  $scope.choices.splice(lastItem);
+    //};
+
+    $scope.addtask = function(){
+      if($scope.task.category=='' || $scope.task.category==undefined)
       {
-        if($scope.task.category=='' || $scope.task.category==undefined)
-        {
-          $scope.task.category='None';
-        }
-        $scope.task.push({title:$scope.task.title, description:$scope.task.description, date:$scope.task.date, category:$scope.task.category, done:false});
-        $scope.task.title = '';
-        $scope.task.description = '';
-        $scope.task.date = '';
-        $scope.task.category = '';
+        $scope.task.category='None';
       }
+      $scope.task.push({title:$scope.task.title, description:$scope.task.description, date:$scope.task.date, category:$scope.task.category, done:false});
+      $scope.task.title = '';
+      $scope.task.description = '';
+      $scope.task.date = '';
+      $scope.task.category = '';
     };
     $scope.deleteCompleted = function(){};
 
-    $scope.doSecondaryAction = function(event) {
+    /*$scope.doSecondaryAction = function(event) {
       $mdDialog.show(
         $mdDialog.alert()
           .title('')
@@ -83,12 +94,18 @@ angular
           .ok('Done!')
           .targetEvent(event)
       );
-    };
+    };*/
 
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
     $scope.isOpenRight = function(){
       return $mdSidenav('right').isOpen();
+    };
+
+    $scope.toggleLeft2 = buildDelayedToggler('left2');
+    $scope.toggleRight2 = buildToggler('right2');
+    $scope.isOpenRight2 = function(){
+      return $mdSidenav('right2').isOpen();
     };
 
     $scope.toolTip = {
@@ -101,10 +118,10 @@ angular
       showTooltip : false,
     };
 
-    $scope.showTabDialog = function(ev) {
+    /*$scope.showTabDialog = function(ev) {
       $mdDialog.show({
           controller: DialogController,
-          templateUrl: 'app/main/tabDialog.tmpl.html',
+          templateUrl: 'app/main/taskCreator.html',
           parent: angular.element(document.body),
           targetEvent: ev,
           clickOutsideToClose:true
@@ -112,7 +129,7 @@ angular
         .then(function(answer) {
             $scope.task.push({title:answer[0], description:answer[1], date:answer[2], category:answer[3], done:false});
         });
-    };
+    };*/
 
     /**
      * Supplies a function that will continue to operate until the
@@ -154,14 +171,14 @@ angular
       }
     }
   })
-  .config(function($mdThemingProvider) {
+  /*.config(function($mdThemingProvider) {
     // Configure a dark theme with primary foreground yellow
     $mdThemingProvider.theme('docs-grey', 'default')
       .primaryPalette('blue')
       .accentPalette('indigo')
       .warnPalette('red')
       .backgroundPalette('grey',{'default':'100'});
-  })
+  })*/
   .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function () {
       $mdSidenav('left').close()
@@ -173,6 +190,22 @@ angular
   .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function () {
       $mdSidenav('right').close()
+        .then(function () {
+          //$log.debug("close RIGHT is done");
+        });
+    };
+  })
+  .controller('LeftCtrl2', function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+      $mdSidenav('left2').close()
+        .then(function () {
+          //$log.debug("close LEFT is done");
+        });
+    };
+  })
+  .controller('RightCtrl2', function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+      $mdSidenav('right2').close()
         .then(function () {
           //$log.debug("close RIGHT is done");
         });
@@ -193,8 +226,6 @@ function DialogController($scope, $mdDialog) {
   };
 }
 
-
-
-
+//ng-click="showTabDialog($event)"
 
 
