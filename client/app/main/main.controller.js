@@ -108,6 +108,12 @@ angular
       return $mdSidenav('right2').isOpen();
     };
 
+    $scope.toggleLeft3 = buildDelayedToggler('left3');
+    $scope.toggleRight3 = buildToggler('right3');
+    $scope.isOpenRight3 = function(){
+      return $mdSidenav('right3').isOpen();
+    };
+
     $scope.toolTip = {
       showTooltip : false,
     };
@@ -115,6 +121,9 @@ angular
       showTooltip : false,
     };
     $scope.toolTip3 = {
+      showTooltip : false,
+    };
+    $scope.toolTip4 = {
       showTooltip : false,
     };
 
@@ -206,6 +215,22 @@ angular
   .controller('RightCtrl2', function ($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function () {
       $mdSidenav('right2').close()
+        .then(function () {
+          //$log.debug("close RIGHT is done");
+        });
+    };
+  })
+  .controller('LeftCtrl3', function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+      $mdSidenav('left3').close()
+        .then(function () {
+          //$log.debug("close LEFT is done");
+        });
+    };
+  })
+  .controller('RightCtrl3', function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+      $mdSidenav('right3').close()
         .then(function () {
           //$log.debug("close RIGHT is done");
         });

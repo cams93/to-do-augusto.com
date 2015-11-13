@@ -65,7 +65,9 @@
               <md-divider></md-divider>
               <md-list-item ng-repeat="category in categories" ng-click="toggleRight()">
                 <p>{{category.cat}}</p>
+                <md-icon class="md-secondary" ng-click="toggleRight3()" ng-hide="isOpenRight3()" aria-label="options" >more_horiz</md-icon>
               </md-list-item>
+
               <md-list-item>
                 <md-input-container>
                   <label>New category</label>
@@ -123,9 +125,9 @@
               </form>-->
               <div layout="row" style="padding-top: 8px;">
 
-                <md-subheader class="md-no-sticky" flex>My tasks</md-subheader>
+                <md-subheader class="md-no-sticky" flex>My Tasks</md-subheader>
                 <div layout layout-sm="column">
-                  <md-subheader class="md-no-sticky">Remove completed</md-subheader>
+                  <md-subheader class="md-no-sticky">Remove Completed</md-subheader>
                   <md-button class="md-icon-button">
                     <md-icon class="material-icons">done</md-icon>
                     <md-tooltip md-visible="toolTip.showTooltip">
@@ -159,17 +161,24 @@
                   <h1 class="md-toolbar-tools">Edit Task</h1>
                 </md-toolbar>
                 <md-content ng-controller="RightCtrl" layout-padding>
-                  <form>
+                  <form name="formEditTask">
                     <div layout="row">
                       <md-input-container flex>
                         <label>Title</label>
-                        <input ng-model="task.title" md-maxlength="36" required>
+                        <input name="taskTitle" ng-model="task.title" required md-maxlength="36">
+                        <div ng-messages="formEditTask.taskTitle.$error" ng-show="formEditTask.taskTitle.$dirty">
+                          <div ng-message="required">This is required!</div>
+                          <div ng-message="md-maxlength">That's too long!</div>
+                        </div>
                       </md-input-container>
                     </div>
                     <div layout="row">
                       <md-input-container class="md-block" flex>
                         <label>Description</label>
-                        <textarea ng-model="task.description" columns="1" md-maxlength="75"></textarea>
+                        <textarea name="taskDescription" ng-model="task.description" columns="1" md-maxlength="75"></textarea>
+                        <div ng-messages="formEditTask.taskDescription.$error" ng-show="formEditTask.taskDescription.$dirty">
+                          <div ng-message="md-maxlength">That's too long!</div>
+                        </div>
                       </md-input-container>
                     </div>
                     <div layout="row">
@@ -207,17 +216,24 @@
                   <h1 class="md-toolbar-tools">Add Task</h1>
                 </md-toolbar>
                 <md-content ng-controller="RightCtrl2" layout-padding>
-                  <form name="form" ng-submit="addtask(); close()">
+                  <form name="formAddTask" ng-submit="addtask(); close()">
                     <div layout="row">
                       <md-input-container flex>
                         <label>Title</label>
-                        <input ng-model="task.title" md-maxlength="36" required>
+                        <input name="taskTitle" ng-model="task.title" required md-maxlength="36">
+                        <div ng-messages="formAddTask.taskTitle.$error" ng-show="formAddTask.taskTitle.$dirty">
+                          <div ng-message="required">This is required!</div>
+                          <div ng-message="md-maxlength">That's too long!</div>
+                        </div>
                       </md-input-container>
                     </div>
                     <div layout="row">
                       <md-input-container class="md-block" flex>
                         <label>Description</label>
-                        <textarea ng-model="task.description" columns="1" md-maxlength="75"></textarea>
+                        <textarea name="taskDescription" ng-model="task.description" columns="1" md-maxlength="75"></textarea>
+                        <div ng-messages="formAddTask.taskDescription.$error" ng-show="formAddTask.taskDescription.$dirty">
+                          <div ng-message="md-maxlength">That's too long!</div>
+                        </div>
                       </md-input-container>
                     </div>
                     <div layout="row">
@@ -235,6 +251,37 @@
                     </div>
                     <md-button class="md-primary">
                       ADD TASK
+                    </md-button>
+                    <md-button class="md-primary">
+                      CANCEL
+                    </md-button>
+                  </form>
+                </md-content>
+              </md-sidenav>
+
+              <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right3">
+                <md-toolbar class="md-theme-light">
+                  <h1 class="md-toolbar-tools">Edit Category</h1>
+                </md-toolbar>
+                <md-content ng-controller="RightCtrl3" layout-padding>
+                  <form name="formCategory" ng-submit="close()">
+                    <div layout="row">
+                      <md-input-container flex>
+                        <label>Category Name</label>
+                        <input name="taskCategory"ng-model="task.category" required>
+                        <div ng-messages="formCategory.taskCategory.$error" ng-show="formCategory.taskCategory.$dirty">
+                          <div ng-message="required">This is required!</div>
+                        </div>
+                      </md-input-container>
+                      <md-button class="md-icon-button">
+                        <md-icon class="material-icons">delete</md-icon>
+                        <md-tooltip md-visible="toolTip.showTooltip4">
+                          Delete Category
+                        </md-tooltip>
+                      </md-button>
+                    </div>
+                    <md-button class="md-primary">
+                      SAVE CHANGES
                     </md-button>
                     <md-button class="md-primary">
                       CANCEL
