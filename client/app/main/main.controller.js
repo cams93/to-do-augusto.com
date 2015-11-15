@@ -66,13 +66,28 @@ angular
       {cat: 'Movies to watch'}
       ];
 
-    $scope.addNewCategory = function() {
-      if(!$scope.taskCategory=='' || !$scope.taskCategory==undefined)
+    $scope.repeatCategory = function(category)
+    {
+      for(var i = 0; i<$scope.categories.length; i++)
       {
-        $scope.categories.push({cat:$scope.taskCategory});
-        $scope.taskCategory='';
-        $scope.formAddCat.$setPristine();
-        $scope.formAddCat.$setUntouched();
+        if($scope.categories[i].cat==category)
+        {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    $scope.addNewCategory = function() {
+      if(!$scope.repeatCategory($scope.taskCategory))
+      {
+        if(!$scope.taskCategory=='' || !$scope.taskCategory==undefined)
+        {
+          $scope.categories.push({cat:$scope.taskCategory});
+          $scope.taskCategory='';
+          $scope.formAddCat.$setPristine();
+          $scope.formAddCat.$setUntouched();
+        }
       }
     };
 
@@ -95,6 +110,27 @@ angular
       $scope.formEditTask.$setUntouched();
     };
 
+    $scope.editCategory = function (category) {
+      $scope.editingCategory = {cat: category.cat};
+      $scope.originalCategory = category;
+    };
+
+    $scope.updateCategory = function (category) {
+      if(!$scope.repeatCategory(category.cat)) {
+        for (var i = 0; i < $scope.task.length; i++) {
+          if ($scope.task[i].category == $scope.originalCategory.cat) {
+            $scope.task[i].category = category.cat;
+          }
+        }
+        $scope.originalCategory.cat = category.cat;
+        $scope.originalCategory = undefined;
+        $scope.editingCategory = undefined;
+        $scope.formCategory.$setPristine();
+        $scope.formCategory.$setUntouched();
+        $scope.close3()
+      }
+    };
+
     $scope.addtask = function(){
       if($scope.task.category=='' || $scope.task.category==undefined)
       {
@@ -109,19 +145,16 @@ angular
       $scope.formAddTask.$setUntouched();
     };
 
-    $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
     $scope.isOpenRight = function(){
       return $mdSidenav('right').isOpen();
     };
 
-    $scope.toggleLeft2 = buildDelayedToggler('left2');
     $scope.toggleRight2 = buildToggler('right2');
     $scope.isOpenRight2 = function(){
       return $mdSidenav('right2').isOpen();
     };
 
-    $scope.toggleLeft3 = buildDelayedToggler('left3');
     $scope.toggleRight3 = buildToggler('right3');
     $scope.isOpenRight3 = function(){
       return $mdSidenav('right3').isOpen();
@@ -133,6 +166,12 @@ angular
 
     $scope.close2 = function () {
       $mdSidenav('right2').close();
+      $scope.task.title = '';
+      $scope.task.description = '';
+      $scope.task.date = '';
+      $scope.task.category = '';
+      $scope.formAddTask.$setPristine();
+      $scope.formAddTask.$setUntouched();
     };
 
     $scope.close3 = function () {
@@ -165,13 +204,6 @@ angular
       };
     }
 
-    function buildDelayedToggler(navID) {
-      return debounce(function() {
-        $mdSidenav(navID)
-          .toggle();
-      }, 200);
-    }
-
     function buildToggler(navID) {
       return function() {
         $mdSidenav(navID)
@@ -180,16 +212,3 @@ angular
     }
   });
 
-function DialogController($scope, $mdDialog) {
-  $scope.hide = function() {
-    $mdDialog.hide();
-  };
-  $scope.cancel = function() {
-    $mdDialog.cancel();
-  };
-  $scope.answer = function(answer) {
-    if(!answer[0]=='' || !answer[0]==undefined) {
-      $mdDialog.hide(answer);
-    }
-  };
-}

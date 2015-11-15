@@ -70,7 +70,7 @@
                   <p>{{category.cat}}</p>
                   <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: false} | filter:{category: category.cat}:true).length}}</h5>
                 </div>
-                <md-icon class="md-secondary" ng-click="toggleRight3()" ng-hide="isOpenRight3()" aria-label="options" >more_horiz</md-icon>
+                <md-icon class="md-secondary" ng-click="editCategory(category);toggleRight3()" ng-hide="isOpenRight3()" aria-label="options" >more_horiz</md-icon>
               </md-list-item>
               <form name="formAddCat" ng-submit="addNewCategory()">
                 <md-list-item>
@@ -131,7 +131,6 @@
                     <div class="md-list-item-text">
                       <p align=right style="padding-right: 40px;">{{task.date | date}}</p>
                     </div>
-                    <!--<md-button ng-click="doSecondaryAction($event)">EDIT</md-button>-->
                     <md-divider></md-divider>
                   </md-list-item>
                   <md-list-item class="md-2-line" ng-repeat="task in task | filter:filters | filter:{done:true}">
@@ -247,7 +246,7 @@
                     <md-button class="md-primary">
                       ADD TASK
                     </md-button>
-                    <md-button class="md-primary">
+                    <md-button type="button" ng-click="close2()" class="md-primary">
                       CANCEL
                     </md-button>
                   </form>
@@ -259,11 +258,11 @@
                   <h1 class="md-toolbar-tools">Edit Category</h1>
                 </md-toolbar>
                 <md-content layout-padding>
-                  <form name="formCategory" ng-submit="close3()">
+                  <form name="formCategory" ng-submit="updateCategory(editingCategory)">
                     <div layout="row">
                       <md-input-container flex>
                         <label>Category Name</label>
-                        <input name="taskCategory"ng-model="task.category" required>
+                        <input name="taskCategory"ng-model="editingCategory.cat" required value={{editingCategory.cat}}>
                         <div ng-messages="formCategory.taskCategory.$error" ng-show="formCategory.taskCategory.$dirty">
                           <div ng-message="required">This is required!</div>
                         </div>
@@ -278,7 +277,7 @@
                     <md-button class="md-primary">
                       SAVE CHANGES
                     </md-button>
-                    <md-button class="md-primary">
+                    <md-button  type="button" ng-click="close3()" class="md-primary">
                       CANCEL
                     </md-button>
                   </form>
