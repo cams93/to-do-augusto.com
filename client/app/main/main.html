@@ -55,7 +55,7 @@
               <md-list-item ng-click="filters.done=false;filterCategory.category='None';section.sec='Inbox'">
                 <md-icon>inbox</md-icon>
                 <p>Inbox</p>
-                <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: false} | filter:{category: 'None'}).length}}</h5>
+                <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: false} | filter:{category: 'None'}:true).length}}</h5>
               </md-list-item>
               <md-list-item ng-click="filters.done=true;filterCategory.category='';section.sec='Completed'">
                 <md-icon>done</md-icon>
@@ -68,7 +68,7 @@
               <md-list-item ng-repeat="category in categories" ng-click="filterCategory.category=category.cat;filters.done=false;section.sec=category.cat">
                 <div layout="row">
                   <p>{{category.cat}}</p>
-                  <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: false} | filter:{category: category.cat}).length}}</h5>
+                  <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: false} | filter:{category: category.cat}:true).length}}</h5>
                 </div>
                 <md-icon class="md-secondary" ng-click="toggleRight3()" ng-hide="isOpenRight3()" aria-label="options" >more_horiz</md-icon>
               </md-list-item>
@@ -105,38 +105,7 @@
           </div>
           <div flex="90">
             <div layout="column" ng-cloak class="md-inline-form">
-              <!--<form name="form" ng-submit="addtask()">
-                <md-content layout-padding layout="column" layout-sm="column">
-                  <div layout="row">
-                    <md-input-container style="margin-bottom: 0px;" flex>
-                      <label>Title</label>
-                      <input name="newTask" ng-model="task.title" md-maxlength="36" required>
-                    </md-input-container>
-                    <div layout layout-sm="column">
-                      <md-datepicker ng-model="task.date" md-placeholder="Enter date"></md-datepicker>
-                    </div>
-                  </div>
-                  <div layout="row">
-                    <md-input-container class="md-block" style="margin-bottom: 0px; height: auto;margin-top: 0px;" flex>
-                      <label>Description</label>
-                      <textarea ng-model="task.description" columns="1" md-maxlength="75"></textarea>
-                    </md-input-container>
-                  </div>
-                  <div layout="row">
-                    <md-input-container flex style="margin-top: 7px;">
-                      <label>Category</label>
-                      <md-select ng-model="task.category">
-                        <md-option ng-repeat="category in categories" value="{{category.cat}}">
-                          {{category.cat}}
-                        </md-option>
-                      </md-select>
-                    </md-input-container>
-                    <md-button>DONE</md-button>
-                  </div>
-                </md-content>
-              </form>-->
               <div layout="row" style="padding-top: 8px;">
-
                 <md-subheader class="md-no-sticky" flex>{{section.sec}}</md-subheader>
                 <div layout layout-sm="column">
                   <md-subheader class="md-no-sticky">Remove Completed</md-subheader>
@@ -151,7 +120,7 @@
               <md-content>
                 <md-list>
                   <md-divider></md-divider>
-                  <md-list-item class="md-2-line" ng-repeat="task in task | filter:filters | filter:filterCategory">
+                  <md-list-item class="md-2-line" ng-repeat="task in task | filter:filterCategory:true | filter:filters">
                     <md-checkbox class="md-primary" ng-model="task.done"></md-checkbox>
                     <div class="md-list-item-text">
                       <h3>{{task.title}}</h3>
@@ -165,6 +134,19 @@
                     <!--<md-button ng-click="doSecondaryAction($event)">EDIT</md-button>-->
                     <md-divider></md-divider>
                   </md-list-item>
+                  <md-list-item class="md-2-line" ng-repeat="task in task | filter:filters | filter:{done:true}">
+                    <md-checkbox class="md-primary" ng-model="task.done"></md-checkbox>
+                    <div class="md-list-item-text">
+                      <h3>{{task.title}}</h3>
+                      <p>{{task.description}}</p>
+                      <p>{{task.category}}</p>
+                    </div>
+                    <md-icon class="md-secondary" ng-click="editTask(task);toggleRight()" ng-hide="isOpenRight()" aria-label="options" >more_horiz</md-icon>
+                    <div class="md-list-item-text">
+                      <p align=right style="padding-right: 40px;">{{task.date | date}}</p>
+                    </div>
+                    <md-divider></md-divider>
+                  </md-list-item>
                 <md-list>
               </md-content>
 
@@ -172,7 +154,7 @@
                 <md-toolbar class="md-theme-light">
                   <h1 class="md-toolbar-tools">Edit Task</h1>
                 </md-toolbar>
-                <md-content ng-controller="RightCtrl" layout-padding>
+                <md-content layout-padding>
                   <form name="formEditTask" ng-submit="updateTask(editingTask);close()">
                     <div layout="row">
                       <md-input-container  flex>
@@ -228,8 +210,8 @@
                 <md-toolbar class="md-theme-light">
                   <h1 class="md-toolbar-tools">Add Task</h1>
                 </md-toolbar>
-                <md-content ng-controller="RightCtrl2" layout-padding>
-                  <form name="formAddTask" ng-submit="addtask(); close()">
+                <md-content layout-padding>
+                  <form name="formAddTask" ng-submit="addtask(); close2()">
                     <div layout="row">
                       <md-input-container flex>
                         <label>Title</label>
@@ -276,8 +258,8 @@
                 <md-toolbar class="md-theme-light">
                   <h1 class="md-toolbar-tools">Edit Category</h1>
                 </md-toolbar>
-                <md-content ng-controller="RightCtrl3" layout-padding>
-                  <form name="formCategory" ng-submit="close()">
+                <md-content layout-padding>
+                  <form name="formCategory" ng-submit="close3()">
                     <div layout="row">
                       <md-input-container flex>
                         <label>Category Name</label>

@@ -89,8 +89,10 @@ angular
       $scope.originalTask.description = task.description;
       $scope.originalTask.date = task.date;
       $scope.originalTask.category = task.category;
-      $scope.originalTask = "";
-      $scope.editingTask = "";
+      $scope.originalTask = undefined;
+      $scope.editingTask = undefined;
+      $scope.formEditTask.$setPristine();
+      $scope.formEditTask.$setUntouched();
     };
 
     $scope.addtask = function(){
@@ -103,6 +105,8 @@ angular
       $scope.task.description = '';
       $scope.task.date = '';
       $scope.task.category = '';
+      $scope.formAddTask.$setPristine();
+      $scope.formAddTask.$setUntouched();
     };
 
     $scope.toggleLeft = buildDelayedToggler('left');
@@ -121,6 +125,18 @@ angular
     $scope.toggleRight3 = buildToggler('right3');
     $scope.isOpenRight3 = function(){
       return $mdSidenav('right3').isOpen();
+    };
+
+    $scope.close = function () {
+      $mdSidenav('right').close();
+    };
+
+    $scope.close2 = function () {
+      $mdSidenav('right2').close();
+    };
+
+    $scope.close3 = function () {
+      $mdSidenav('right3').close();
     };
 
     $scope.toolTip = {
@@ -162,22 +178,6 @@ angular
           .toggle();
       }
     }
-  })
-
-  .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-    $scope.close = function () {
-      $mdSidenav('right').close();
-    };
-  })
-  .controller('RightCtrl2', function ($scope, $timeout, $mdSidenav, $log) {
-    $scope.close = function () {
-      $mdSidenav('right2').close();
-    };
-  })
-  .controller('RightCtrl3', function ($scope, $timeout, $mdSidenav, $log) {
-    $scope.close = function () {
-      $mdSidenav('right3').close();
-    };
   });
 
 function DialogController($scope, $mdDialog) {
