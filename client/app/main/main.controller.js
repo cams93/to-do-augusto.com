@@ -29,13 +29,13 @@ angular
       title: 'Hacer tarea de web',
       description: 'Desarrollar una aplicacion web para la clase',
       date: '2015-11-02T06:00:00.000Z',
-      category: 'None',
-      done: false
+      category: 'Personal',
+      done: true
     },{
       title: 'Jugar xbox',
       description: 'Jugr el miercoles por la tarde',
       date: '2015-11-02T06:00:00.000Z',
-      category: 'None',
+      category: 'Personal',
       done: false
       }
       ,{
@@ -54,18 +54,25 @@ angular
       }
     ];
 
+    $scope.filters = {done: false};
+    $scope.filterCategory = {category: 'None'};
+    $scope.section={sec:'Inbox'};
+
     $scope.categories = [
-      {cat: 'Personal'},
-      {cat: 'Shopping'},
-      {cat: 'Work'},
-      {cat: 'Errands'},
-      {cat: 'Movies to watch'}
+      {cat: 'Personal', count:0},
+      {cat: 'Shopping', count:0},
+      {cat: 'Work', count:0},
+      {cat: 'Errands', count:0},
+      {cat: 'Movies to watch', count:0}
       ];
 
     $scope.addNewCategory = function() {
-      $scope.categories.push({cat:$scope.taskCategory});
+      $scope.categories.push({cat:$scope.taskCategory, count:0});
       $scope.taskCategory='';
     };
+
+    $scope.categoryCounter = {};
+
 
     //$scope.removeChoice = function() {
     //  var lastItem = $scope.choices.length-1;
@@ -83,7 +90,17 @@ angular
       $scope.task.date = '';
       $scope.task.category = '';
     };
-    $scope.deleteCompleted = function(){};
+    /*$scope.removeCompleted = function(){
+        $scope.task=$scope.task.filter(function(task){
+          return !task.done;
+        })
+    };
+    $scope.showTasksCompleted = function(){
+      $scope.task=$scope.task.filter(function(task){
+        return task.done;
+      })
+    };*/
+
 
     /*$scope.doSecondaryAction = function(event) {
       $mdDialog.show(
@@ -252,5 +269,6 @@ function DialogController($scope, $mdDialog) {
 }
 
 //ng-click="showTabDialog($event)"
+//console.log($scope.filters);
 
 
