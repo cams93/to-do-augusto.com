@@ -28,27 +28,27 @@ angular
     $scope.task = [{
       title: 'Hacer tarea de web',
       description: 'Desarrollar una aplicacion web para la clase',
-      date: '2015-11-02T06:00:00.000Z',
+      date: '',
       category: 'Personal',
       done: true
     },{
       title: 'Jugar xbox',
       description: 'Jugr el miercoles por la tarde',
-      date: '2015-11-02T06:00:00.000Z',
+      date: '',
       category: 'Personal',
       done: false
       }
       ,{
         title: 'Jugar xbox',
         description: 'Jugr el miercoles por la tarde',
-        date: '2015-11-02T06:00:00.000Z',
+        date: '',
         category: 'None',
         done: false
       }
       ,{
         title: 'Jugar xbox',
         description: 'Jugr el miercoles por la tarde',
-        date: '',
+        date:  new Date(2015, 11, 10),
         category: 'None',
         done: false
       }
@@ -67,7 +67,6 @@ angular
       ];
 
     $scope.addNewCategory = function() {
-
       if(!$scope.taskCategory=='' || !$scope.taskCategory==undefined)
       {
         $scope.categories.push({cat:$scope.taskCategory});
@@ -75,13 +74,24 @@ angular
         $scope.formAddCat.$setPristine();
         $scope.formAddCat.$setUntouched();
       }
-
     };
 
-    //$scope.removeChoice = function() {
-    //  var lastItem = $scope.choices.length-1;
-    //  $scope.choices.splice(lastItem);
-    //};
+    $scope.editTask = function (task) {
+      $scope.editingTask = {  title: task.title,
+                              description: task.description,
+                              date: task.date,
+                              category: task.category };
+      $scope.originalTask = task;
+    };
+
+    $scope.updateTask = function (task) {
+      $scope.originalTask.title = task.title;
+      $scope.originalTask.description = task.description;
+      $scope.originalTask.date = task.date;
+      $scope.originalTask.category = task.category;
+      $scope.originalTask = "";
+      $scope.editingTask = "";
+    };
 
     $scope.addtask = function(){
       if($scope.task.category=='' || $scope.task.category==undefined)
@@ -126,23 +136,6 @@ angular
       showTooltip : false,
     };
 
-    /*$scope.showTabDialog = function(ev) {
-      $mdDialog.show({
-          controller: DialogController,
-          templateUrl: 'app/main/taskCreator.html',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose:true
-        })
-        .then(function(answer) {
-            $scope.task.push({title:answer[0], description:answer[1], date:answer[2], category:answer[3], done:false});
-        });
-    };*/
-
-    /**
-     * Supplies a function that will continue to operate until the
-     * time is up.
-     */
     function debounce(func, wait, context) {
       var timer;
       return function debounced() {
@@ -155,84 +148,35 @@ angular
         }, wait || 10);
       };
     }
-    /**
-     * Build handler to open/close a SideNav; when animation finishes
-     * report completion in console
-     */
 
     function buildDelayedToggler(navID) {
       return debounce(function() {
         $mdSidenav(navID)
-          .toggle()
-          .then(function () {
-            $log.debug("toggle " + navID + " is done");
-          });
+          .toggle();
       }, 200);
     }
+
     function buildToggler(navID) {
       return function() {
         $mdSidenav(navID)
-          .toggle()
-          .then(function () {
-            $log.debug("toggle " + navID + " is done");
-          });
+          .toggle();
       }
     }
   })
-  /*.config(function($mdThemingProvider) {
-    // Configure a dark theme with primary foreground yellow
-    $mdThemingProvider.theme('docs-grey', 'default')
-      .primaryPalette('blue')
-      .accentPalette('indigo')
-      .warnPalette('red')
-      .backgroundPalette('grey',{'default':'100'});
-  })*/
-  .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-    $scope.close = function () {
-      $mdSidenav('left').close()
-        .then(function () {
-          //$log.debug("close LEFT is done");
-        });
-    };
-  })
+
   .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function () {
-      $mdSidenav('right').close()
-        .then(function () {
-          //$log.debug("close RIGHT is done");
-        });
-    };
-  })
-  .controller('LeftCtrl2', function ($scope, $timeout, $mdSidenav, $log) {
-    $scope.close = function () {
-      $mdSidenav('left2').close()
-        .then(function () {
-          //$log.debug("close LEFT is done");
-        });
+      $mdSidenav('right').close();
     };
   })
   .controller('RightCtrl2', function ($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function () {
-      $mdSidenav('right2').close()
-        .then(function () {
-          //$log.debug("close RIGHT is done");
-        });
-    };
-  })
-  .controller('LeftCtrl3', function ($scope, $timeout, $mdSidenav, $log) {
-    $scope.close = function () {
-      $mdSidenav('left3').close()
-        .then(function () {
-          //$log.debug("close LEFT is done");
-        });
+      $mdSidenav('right2').close();
     };
   })
   .controller('RightCtrl3', function ($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function () {
-      $mdSidenav('right3').close()
-        .then(function () {
-          //$log.debug("close RIGHT is done");
-        });
+      $mdSidenav('right3').close();
     };
   });
 
