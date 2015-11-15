@@ -59,20 +59,24 @@ angular
     $scope.section={sec:'Inbox'};
 
     $scope.categories = [
-      {cat: 'Personal', count:0},
-      {cat: 'Shopping', count:0},
-      {cat: 'Work', count:0},
-      {cat: 'Errands', count:0},
-      {cat: 'Movies to watch', count:0}
+      {cat: 'Personal'},
+      {cat: 'Shopping'},
+      {cat: 'Work'},
+      {cat: 'Errands'},
+      {cat: 'Movies to watch'}
       ];
 
     $scope.addNewCategory = function() {
-      $scope.categories.push({cat:$scope.taskCategory, count:0});
-      $scope.taskCategory='';
+
+      if(!$scope.taskCategory=='' || !$scope.taskCategory==undefined)
+      {
+        $scope.categories.push({cat:$scope.taskCategory});
+        $scope.taskCategory='';
+        $scope.formAddCat.$setPristine();
+        $scope.formAddCat.$setUntouched();
+      }
+
     };
-
-    $scope.categoryCounter = {};
-
 
     //$scope.removeChoice = function() {
     //  var lastItem = $scope.choices.length-1;
@@ -90,28 +94,6 @@ angular
       $scope.task.date = '';
       $scope.task.category = '';
     };
-    /*$scope.removeCompleted = function(){
-        $scope.task=$scope.task.filter(function(task){
-          return !task.done;
-        })
-    };
-    $scope.showTasksCompleted = function(){
-      $scope.task=$scope.task.filter(function(task){
-        return task.done;
-      })
-    };*/
-
-
-    /*$scope.doSecondaryAction = function(event) {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .title('')
-          .content('')
-          .ariaLabel('')
-          .ok('Done!')
-          .targetEvent(event)
-      );
-    };*/
 
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
@@ -267,8 +249,3 @@ function DialogController($scope, $mdDialog) {
     }
   };
 }
-
-//ng-click="showTabDialog($event)"
-//console.log($scope.filters);
-
-

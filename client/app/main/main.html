@@ -55,12 +55,12 @@
               <md-list-item ng-click="filters.done=false;filterCategory.category='None';section.sec='Inbox'">
                 <md-icon>inbox</md-icon>
                 <p>Inbox</p>
-                <h5 style="color:#999999; margin-left: 10px">0</h5>
+                <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: false} | filter:{category: 'None'}).length}}</h5>
               </md-list-item>
               <md-list-item ng-click="filters.done=true;filterCategory.category='';section.sec='Completed'">
                 <md-icon>done</md-icon>
                 <p>Completed</p>
-                <h5 style="color:#999999; margin-left: 10px">0</h5>
+                <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: true} | filter:{category: ''}).length}}</h5>
               </md-list-item>
               <md-divider></md-divider>
               <md-subheader class="md-no-sticky" style="background: #f5f5f5;" flex>Categories</md-subheader>
@@ -68,27 +68,27 @@
               <md-list-item ng-repeat="category in categories" ng-click="filterCategory.category=category.cat;filters.done=false;section.sec=category.cat">
                 <div layout="row">
                   <p>{{category.cat}}</p>
-                  <h5 style="color:#999999; margin-left: 10px">{{category.count}}</h5>
+                  <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: false} | filter:{category: category.cat}).length}}</h5>
                 </div>
                 <md-icon class="md-secondary" ng-click="toggleRight3()" ng-hide="isOpenRight3()" aria-label="options" >more_horiz</md-icon>
               </md-list-item>
-
-              <md-list-item>
-                <form name="formAddCategory" ng-submit="addNewCategory()">
+              <form name="formAddCat" ng-submit="addNewCategory()">
+                <md-list-item>
                   <div layout="row">
                     <md-input-container>
                       <label>New category</label>
-                      <input ng-model="taskCategory"type="text" required>
-                      <div ng-messages="formAddCategory.taskCategory.$error" ng-show="formAddCategory.taskCategory.$dirty">
+                      <input name="taskCategory" ng-model="taskCategory"type="text" required md-maxlength="17">
+                      <div ng-messages="formAddCat.taskCategory.$error" ng-show="formAddCat.taskCategory.$dirty">
                         <div ng-message="required">This is required!</div>
+                        <div ng-message="md-maxlength">That's too long!</div>
                       </div>
                     </md-input-container>
                     <md-button class="md-icon-button">
                       <md-icon>add</md-icon>
                     </md-button>
                   </div>
-                </form>
-              </md-list-item>
+                </md-list-item>
+              </form>
             <md-list>
           </md-content>
 
