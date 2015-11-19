@@ -175,7 +175,7 @@
                         <md-datepicker ng-model="editingTask.date" md-placeholder="Enter date"></md-datepicker>
                       </div>
                       <md-button class="md-icon-button">
-                        <md-icon class="material-icons">delete</md-icon>
+                        <md-icon ng-click="deleteTask(originalTask)" class="material-icons">delete</md-icon>
                         <md-tooltip md-visible="toolTip.showTooltip2">
                           Delete Task
                         </md-tooltip>

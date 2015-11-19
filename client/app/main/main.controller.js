@@ -110,6 +110,13 @@ angular
       $scope.formEditTask.$setUntouched();
     };
 
+    $scope.deleteTask = function(task){
+      var index = $scope.task.indexOf(task);
+      if (index != -1) {
+        $scope.task.splice(index, 1);
+      }
+    };
+
     $scope.editCategory = function (category) {
       $scope.editingCategory = {cat: category.cat};
       $scope.originalCategory = category;
