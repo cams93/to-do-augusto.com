@@ -132,17 +132,25 @@ angular
     };
 
     $scope.addtask = function(){
-      if($scope.task.category=='' || $scope.task.category==undefined)
-      {
-        $scope.task.category='None';
+      if(!$scope.task.title=='' || !$scope.task.title==undefined) {
+        if ($scope.task.category == '' || $scope.task.category == undefined) {
+          $scope.task.category = 'None';
+        }
+        $scope.task.push({
+          title: $scope.task.title,
+          description: $scope.task.description,
+          date: $scope.task.date,
+          category: $scope.task.category,
+          done: false
+        });
+        $scope.task.title = '';
+        $scope.task.description = '';
+        $scope.task.date = '';
+        $scope.task.category = '';
+        $scope.formAddTask.$setPristine();
+        $scope.formAddTask.$setUntouched();
+        $scope.close2()
       }
-      $scope.task.push({title:$scope.task.title, description:$scope.task.description, date:$scope.task.date, category:$scope.task.category, done:false});
-      $scope.task.title = '';
-      $scope.task.description = '';
-      $scope.task.date = '';
-      $scope.task.category = '';
-      $scope.formAddTask.$setPristine();
-      $scope.formAddTask.$setUntouched();
     };
 
     $scope.toggleRight = buildToggler('right');

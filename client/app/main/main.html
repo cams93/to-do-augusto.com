@@ -1,15 +1,6 @@
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<!--<div ng-include="'components/navbar/navbar.html'"></div>
-
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>To-Do</h1>
-    <p class="lead">Web application to manage your tasks</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
-</header>-->
 
 <style>
   .material-icons.orange600 { color: #FB8C00; }
@@ -36,13 +27,12 @@
   }
 </style>
 
-<md-toolbar class="md-theme-indigo" style="position: fixed;">
-  <h1 class="md-toolbar-tools">To-Do</h1>
-</md-toolbar>
-
-<div class="topblock"></div>
-
 <body>
+  <md-toolbar class="md-theme-indigo" style="position: fixed;">
+    <h1 class="md-toolbar-tools">To-Do</h1>
+  </md-toolbar>
+
+  <div class="topblock"></div>
   <div layout="row" layout-wrap  ng-controller="tasks">
     <div flex="25" >
       <div layout="row" layout-wrap>
@@ -63,7 +53,7 @@
                 <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: true} | filter:{category: ''}).length}}</h5>
               </md-list-item>
               <md-divider></md-divider>
-              <md-subheader class="md-no-sticky" style="background: #f5f5f5;" flex>Categories</md-subheader>
+              <h5 style="color:#999999; margin: 16px">Categories</h5>
               <md-divider></md-divider>
               <md-list-item ng-repeat="category in categories" ng-click="filterCategory.category=category.cat;filters.done=false;section.sec=category.cat">
                 <div layout="row">
@@ -125,7 +115,6 @@
                     <div class="md-list-item-text">
                       <h3>{{task.title}}</h3>
                       <p>{{task.description}}</p>
-                      <p>{{task.category}}</p>
                     </div>
                     <md-icon class="md-secondary" ng-click="editTask(task);toggleRight()" ng-hide="isOpenRight()" aria-label="options" >more_horiz</md-icon>
                     <div class="md-list-item-text">
@@ -138,7 +127,6 @@
                     <div class="md-list-item-text">
                       <h3>{{task.title}}</h3>
                       <p>{{task.description}}</p>
-                      <p>{{task.category}}</p>
                     </div>
                     <md-icon class="md-secondary" ng-click="editTask(task);toggleRight()" ng-hide="isOpenRight()" aria-label="options" >more_horiz</md-icon>
                     <div class="md-list-item-text">
@@ -210,7 +198,7 @@
                   <h1 class="md-toolbar-tools">Add Task</h1>
                 </md-toolbar>
                 <md-content layout-padding>
-                  <form name="formAddTask" ng-submit="addtask(); close2()">
+                  <form name="formAddTask" ng-submit="addtask()">
                     <div layout="row">
                       <md-input-container flex>
                         <label>Title</label>
