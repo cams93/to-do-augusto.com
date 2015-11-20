@@ -96,11 +96,23 @@ angular
     };
 
     $scope.editTask = function (task) {
-      $scope.editingTask = {  title: task.title,
-                              description: task.description,
-                              date: task.date,
-                              category: task.category };
+
+      if(task.date==undefined || task.date=='')
+      {
+        $scope.editingTask = {  title: task.title,
+          description: task.description,
+          date: task.date,
+          category: task.category };
+      }
+      else{
+        $scope.editingTask = {  title: task.title,
+          description: task.description,
+          date: new Date(task.date),
+          category: task.category };
+      }
+
       $scope.originalTask = task;
+      console.log(task._id);
     };
 
     $scope.updateTask = function (task) {

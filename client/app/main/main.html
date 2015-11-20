@@ -174,8 +174,8 @@
                       <div layout layout-sm="column">
                         <md-datepicker ng-model="editingTask.date" md-placeholder="Enter date"></md-datepicker>
                       </div>
-                      <md-button class="md-icon-button">
-                        <md-icon ng-click="deleteTask(originalTask)" class="material-icons">delete</md-icon>
+                      <md-button type="button" class="md-icon-button">
+                        <md-icon ng-click="deleteTask(originalTask);close()" class="material-icons">delete</md-icon>
                         <md-tooltip md-visible="toolTip.showTooltip2">
                           Delete Task
                         </md-tooltip>
@@ -255,8 +255,8 @@
                           <div ng-message="required">This is required!</div>
                         </div>
                       </md-input-container>
-                      <md-button class="md-icon-button">
-                        <md-icon ng-click="deleteCategory(originalCategory)" class="material-icons">delete</md-icon>
+                      <md-button type="button" class="md-icon-button">
+                        <md-icon ng-click="deleteCategory(originalCategory);close3()" class="material-icons">delete</md-icon>
                         <md-tooltip md-visible="toolTip.showTooltip4">
                           Delete Category
                         </md-tooltip>
