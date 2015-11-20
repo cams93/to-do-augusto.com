@@ -104,10 +104,19 @@ angular
     };
 
     $scope.updateTask = function (task) {
+
+      $http.put('/api/things/' + $scope.originalTask._id, {
+        title: task.title,
+        description: task.description,
+        date: task.date,
+        category: task.category
+      });
+
       $scope.originalTask.title = task.title;
       $scope.originalTask.description = task.description;
       $scope.originalTask.date = task.date;
       $scope.originalTask.category = task.category;
+      
       $scope.originalTask = undefined;
       $scope.editingTask = undefined;
       $scope.formEditTask.$setPristine();
@@ -117,6 +126,7 @@ angular
     $scope.deleteTask = function(task){
       var index = $scope.task.indexOf(task);
       if (index != -1) {
+        $http.delete('/api/things/' + task._id);
         $scope.task.splice(index, 1);
       }
     };
@@ -124,6 +134,8 @@ angular
     $scope.editCategory = function (category) {
       $scope.editingCategory = {cat: category.cat};
       $scope.originalCategory = category;
+      console.log($scope.task);
+      console.log($scope.categories);
     };
 
     $scope.updateCategory = function (category) {
@@ -145,6 +157,7 @@ angular
     $scope.deleteCategory = function(category){
       var index = $scope.categories.indexOf(category);
       if (index != -1) {
+        $http.delete('/api/categorys/' + category._id);
         $scope.taskWithoutCategory(category.cat);
         $scope.categories.splice(index, 1);
       }
