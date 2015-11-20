@@ -26,27 +26,27 @@ angular
   .controller('tasks', function($scope, $mdDialog, $timeout, $mdSidenav, $log) {
 
     $scope.task = [{
-      title: 'Hacer tarea de web',
+      title: 'Hacer tarea de web 1',
       description: 'Desarrollar una aplicacion web para la clase',
       date: '',
       category: 'Personal',
-      done: true
+      done: false
     },{
-      title: 'Jugar xbox',
+      title: 'Jugar xbox 2',
       description: 'Jugr el miercoles por la tarde',
       date: '',
       category: 'Personal',
       done: false
       }
       ,{
-        title: 'Jugar xbox',
+        title: 'Jugar xbox 3',
         description: 'Jugr el miercoles por la tarde',
         date: '',
         category: 'None',
         done: false
       }
       ,{
-        title: 'Jugar xbox',
+        title: 'Jugar xbox 4',
         description: 'Jugr el miercoles por la tarde',
         date:  new Date(2015, 11, 10),
         category: 'None',
@@ -76,6 +76,23 @@ angular
         }
       }
       return false;
+    };
+
+    $scope.taskWithoutCategory = function(category)
+    {
+      var del = false;
+      for(var i = 0; i<$scope.task.length; i++)
+      {
+        if($scope.task[i].category==category && !del)
+        {
+          $scope.deleteTask($scope.task[i]);
+          del = true;
+        }
+      }
+      if(del)
+      {
+        $scope.taskWithoutCategory(category);
+      }
     };
 
     $scope.addNewCategory = function() {
@@ -135,6 +152,14 @@ angular
         $scope.formCategory.$setPristine();
         $scope.formCategory.$setUntouched();
         $scope.close3()
+      }
+    };
+
+    $scope.deleteCategory = function(category){
+      var index = $scope.categories.indexOf(category);
+      if (index != -1) {
+        $scope.taskWithoutCategory(category.cat);
+        $scope.categories.splice(index, 1);
       }
     };
 
