@@ -41,14 +41,6 @@ angular
     $scope.filterCategory = {category: 'None'};
     $scope.section={sec:'Inbox'};
 
-    /*$scope.categories = [
-      {cat: 'Personal'},
-      {cat: 'Shopping'},
-      {cat: 'Work'},
-      {cat: 'Errands'},
-      {cat: 'Movies to watch'}
-      ];*/
-
     $scope.repeatCategory = function(category)
     {
       for(var i = 0; i<$scope.categories.length; i++)
@@ -91,6 +83,11 @@ angular
         if(!$scope.taskCategory=='' || !$scope.taskCategory==undefined)
         {
           $scope.categories.push({cat:$scope.taskCategory});
+
+          $http.post('/api/categorys', {
+            cat:$scope.taskCategory
+          });
+
           $scope.taskCategory='';
           $scope.formAddCat.$setPristine();
           $scope.formAddCat.$setUntouched();
