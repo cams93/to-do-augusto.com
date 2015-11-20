@@ -31,17 +31,23 @@ angular
       $scope.task = awesomeThings;
     });
 
+    $scope.categories = [];
+
+    $http.get('/api/categorys').success(function(awesomeThings) {
+      $scope.categories = awesomeThings;
+    });
+
     $scope.filters = {done: false};
     $scope.filterCategory = {category: 'None'};
     $scope.section={sec:'Inbox'};
 
-    $scope.categories = [
+    /*$scope.categories = [
       {cat: 'Personal'},
       {cat: 'Shopping'},
       {cat: 'Work'},
       {cat: 'Errands'},
       {cat: 'Movies to watch'}
-      ];
+      ];*/
 
     $scope.repeatCategory = function(category)
     {

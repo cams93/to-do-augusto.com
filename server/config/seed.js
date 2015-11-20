@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Category = require('../api/category/category.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -37,6 +38,16 @@ Thing.find({}).remove(function() {
       category: 'None',
       done: false
     });
+});
+
+Category.find({}).remove(function() {
+  Category.create(
+    {cat: 'Personal'},
+    {cat: 'Shopping'},
+    {cat: 'Work'},
+    {cat: 'Errands'},
+    {cat: 'Movies to watch'}
+  );
 });
 
 User.find({}).remove(function() {
