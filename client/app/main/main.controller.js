@@ -116,7 +116,7 @@ angular
       $scope.originalTask.description = task.description;
       $scope.originalTask.date = task.date;
       $scope.originalTask.category = task.category;
-      
+
       $scope.originalTask = undefined;
       $scope.editingTask = undefined;
       $scope.formEditTask.$setPristine();
@@ -142,9 +142,19 @@ angular
       if(!$scope.repeatCategory(category.cat)) {
         for (var i = 0; i < $scope.task.length; i++) {
           if ($scope.task[i].category == $scope.originalCategory.cat) {
+
+            $http.put('/api/things/' + $scope.task[i]._id, {
+              category: category.cat
+            });
+
             $scope.task[i].category = category.cat;
           }
         }
+
+        $http.put('/api/categorys/' + $scope.originalCategory._id, {
+          cat: category.cat
+        });
+
         $scope.originalCategory.cat = category.cat;
         $scope.originalCategory = undefined;
         $scope.editingCategory = undefined;
