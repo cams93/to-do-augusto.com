@@ -23,36 +23,13 @@ angular.module('toDoApp')
 
 angular
   .module('toDoApp')
-  .controller('tasks', function($scope, $mdDialog, $timeout, $mdSidenav, $log) {
+  .controller('tasks', function($scope, $http, $mdDialog, $timeout, $mdSidenav, $log) {
 
-    $scope.task = [{
-      title: 'Hacer tarea de web 1',
-      description: 'Desarrollar una aplicacion web para la clase',
-      date: '',
-      category: 'Personal',
-      done: false
-    },{
-      title: 'Jugar xbox 2',
-      description: 'Jugr el miercoles por la tarde',
-      date: '',
-      category: 'Personal',
-      done: false
-      }
-      ,{
-        title: 'Jugar xbox 3',
-        description: 'Jugr el miercoles por la tarde',
-        date: '',
-        category: 'None',
-        done: false
-      }
-      ,{
-        title: 'Jugar xbox 4',
-        description: 'Jugr el miercoles por la tarde',
-        date:  new Date(2015, 11, 10),
-        category: 'None',
-        done: false
-      }
-    ];
+    $scope.task = [];
+
+    $http.get('/api/things').success(function(awesomeThings) {
+      $scope.task = awesomeThings;
+    });
 
     $scope.filters = {done: false};
     $scope.filterCategory = {category: 'None'};
@@ -175,6 +152,7 @@ angular
         if ($scope.task.category == '' || $scope.task.category == undefined) {
           $scope.task.category = 'None';
         }
+
         $scope.task.push({
           title: $scope.task.title,
           description: $scope.task.description,
@@ -182,6 +160,15 @@ angular
           category: $scope.task.category,
           done: false
         });
+
+        $http.post('/api/things', {
+          title: $scope.task.title,
+          description: $scope.task.description,
+          date: $scope.task.date,
+          category: $scope.task.category,
+          done: false
+        });
+
         $scope.task.title = '';
         $scope.task.description = '';
         $scope.task.date = '';
