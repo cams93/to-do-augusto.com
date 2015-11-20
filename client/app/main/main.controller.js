@@ -95,6 +95,13 @@ angular
       }
     };
 
+    $scope.removeCompleted = function()
+    {
+      $scope.task = $scope.task.filter(function(task){
+        return !task.done;
+      })
+    };
+
     $scope.addNewCategory = function() {
       if(!$scope.repeatCategory($scope.taskCategory))
       {
