@@ -111,7 +111,7 @@
                 <md-list>
                   <md-divider></md-divider>
                   <md-list-item class="md-2-line" ng-repeat="task in task | filter:filterCategory:true | filter:filters">
-                    <md-checkbox class="md-primary" ng-model="task.done"></md-checkbox>
+                    <md-checkbox ng-click="pressTrue(task)" class="md-primary" ng-model="task.done"></md-checkbox>
                     <div class="md-list-item-text">
                       <h3>{{task.title}}</h3>
                       <p>{{task.description}}</p>
@@ -123,7 +123,7 @@
                     <md-divider></md-divider>
                   </md-list-item>
                   <md-list-item class="md-2-line" ng-repeat="task in task | filter:filters | filter:{done:true}">
-                    <md-checkbox class="md-primary" ng-model="task.done"></md-checkbox>
+                    <md-checkbox ng-click="pressFalse(task)" class="md-primary" ng-model="task.done"></md-checkbox>
                     <div class="md-list-item-text">
                       <h3>{{task.title}}</h3>
                       <p>{{task.description}}</p>

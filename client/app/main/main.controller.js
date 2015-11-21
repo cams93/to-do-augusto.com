@@ -72,9 +72,28 @@ angular
 
     $scope.removeCompleted = function()
     {
+      for (var i = 0; i < $scope.task.length; i++) {
+        if($scope.task[i].done == true){
+          $http.delete('/api/things/' + $scope.task[i]._id);
+        }
+      }
       $scope.task = $scope.task.filter(function(task){
         return !task.done;
-      })
+      });
+    };
+
+    $scope.pressTrue = function(task){
+
+      $http.put('/api/things/' + task._id, {
+        done : true
+      });
+    };
+
+    $scope.pressFalse = function(task){
+
+      $http.put('/api/things/' + task._id, {
+        done : false
+      });
     };
 
     $scope.addNewCategory = function() {
@@ -82,10 +101,12 @@ angular
       {
         if(!$scope.taskCategory=='' || !$scope.taskCategory==undefined)
         {
-          $scope.categories.push({cat:$scope.taskCategory});
-
           $http.post('/api/categorys', {
             cat:$scope.taskCategory
+          });
+
+          $http.get('/api/categorys').success(function(awesomeThings) {
+            $scope.categories = awesomeThings;
           });
 
           $scope.taskCategory='';
@@ -112,7 +133,6 @@ angular
       }
 
       $scope.originalTask = task;
-      console.log(task._id);
     };
 
     $scope.updateTask = function (task) {
@@ -146,8 +166,6 @@ angular
     $scope.editCategory = function (category) {
       $scope.editingCategory = {cat: category.cat};
       $scope.originalCategory = category;
-      console.log($scope.task);
-      console.log($scope.categories);
     };
 
     $scope.updateCategory = function (category) {
@@ -191,7 +209,7 @@ angular
           $scope.task.category = 'None';
         }
 
-        $scope.task.push({
+        $http.post('/api/things', {
           title: $scope.task.title,
           description: $scope.task.description,
           date: $scope.task.date,
@@ -199,12 +217,8 @@ angular
           done: false
         });
 
-        $http.post('/api/things', {
-          title: $scope.task.title,
-          description: $scope.task.description,
-          date: $scope.task.date,
-          category: $scope.task.category,
-          done: false
+        $http.get('/api/things').success(function(awesomeThings) {
+          $scope.task = awesomeThings;
         });
 
         $scope.task.title = '';
