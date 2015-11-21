@@ -12,6 +12,7 @@
       <div layout="row" layout-wrap>
         <div flex="25">
         </div>
+        <!-- div for categories -->
         <div flex="50">
           <md-content>
             <md-list class="navLeft-fixed">
@@ -60,6 +61,7 @@
         </div>
       </div>
     </div>
+    <!-- div to show taks -->
     <div flex="50">
       <md-card class="md-default-theme">
         <div layout="row" layout-wrap>
@@ -82,6 +84,7 @@
               <md-content>
                 <md-list>
                   <md-divider></md-divider>
+                  <!-- tasks not completed -->
                   <md-list-item class="md-2-line" ng-repeat="task in task | filter:filterCategory:true | filter:filters">
                     <md-checkbox ng-click="pressTrue(task)" class="md-primary" ng-model="task.done"></md-checkbox>
                     <div class="md-list-item-text">
@@ -94,6 +97,7 @@
                     </div>
                     <md-divider></md-divider>
                   </md-list-item>
+                  <!-- tasks completed -->
                   <md-list-item class="md-2-line" ng-repeat="task in task | filter:filters | filter:{done:true}">
                     <md-checkbox ng-click="pressFalse(task)" class="md-primary" ng-model="task.done"></md-checkbox>
                     <div class="md-list-item-text">
@@ -109,6 +113,7 @@
                 <md-list>
               </md-content>
 
+              <!-- edit task -->
               <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
                 <md-toolbar class="md-theme-light">
                   <h1 class="md-toolbar-tools">Edit Task</h1>
@@ -160,11 +165,10 @@
                       CANCEL
                     </md-button>
                   </form>
-
                 </md-content>
               </md-sidenav>
 
-
+              <!-- add task -->
               <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right2">
                 <md-toolbar class="md-theme-light">
                   <h1 class="md-toolbar-tools">Add Task</h1>
@@ -213,6 +217,7 @@
                 </md-content>
               </md-sidenav>
 
+              <!-- edit category -->
               <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right3">
                 <md-toolbar class="md-theme-light">
                   <h1 class="md-toolbar-tools">Edit Category</h1>
@@ -252,7 +257,7 @@
       </md-card>
     </div>
     <div flex="25">
-
+      <!-- button to add new tasks -->
       <md-button class="md-icon-button" id="fixedbutton"  ng-click="toggleRight2()" ng-hide="isOpenRight2()">
         <md-icon-button class="material-icons md-48 blue">add_circle</md-icon-button>
           <md-tooltip md-visible="toolTip.showTooltip3" md-direction="top">
