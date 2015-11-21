@@ -33,6 +33,57 @@
   margin-left: 15px;
 }
 
+.dateFormat-list{
+  padding-right: 40px;
+}
+
+.toolbar-fixed{
+  position: fixed;
+}
+
+.navLeft-fixed{
+  padding-top: 8px;
+  width: 220px;
+  position: fixed;
+}
+
+.mainOptions-navFixed{
+  color:#999999;
+  margin-left: 10px
+}
+
+.secundaryOptions-navFixed{
+  color:#999999;
+  margin: 16px
+}
+
+.divTop-tasks{
+  padding-top: 8px;
+}
+
+.material-icons.orange600 { color: #FB8C00; }
+
+.material-icons.blue { color: #3F51B5; }
+
+md-sidenav,
+md-sidenav.md-locked-open,
+md-sidenav.md-closed.md-locked-open-add-active {
+  min-width: 200px !important;
+  width: 85vw !important;
+  max-width: 400px !important;
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+#fixedbutton {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
 html, body {
   height: 100%;
   color: rgba(0, 0, 0, 0.87);

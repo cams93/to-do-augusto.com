@@ -206,7 +206,7 @@ angular
         $scope.task.category = '';
         $scope.formAddTask.$setPristine();
         $scope.formAddTask.$setUntouched();
-        $scope.close2()
+        $scope.close2();
       }
     };
 

@@ -2,37 +2,11 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<style>
-  .material-icons.orange600 { color: #FB8C00; }
-  .material-icons.blue { color: #3F51B5; }
-  md-sidenav,
-  md-sidenav.md-locked-open,
-  md-sidenav.md-closed.md-locked-open-add-active {
-    min-width: 200px !important;
-    width: 85vw !important;
-    max-width: 400px !important;
-  }
-  .topblock {
-    height: 64px;
-  }
-  .material-icons.md-18 { font-size: 18px; }
-  .material-icons.md-24 { font-size: 24px; }
-  .material-icons.md-36 { font-size: 36px; }
-  .material-icons.md-48 { font-size: 48px; }
-
-  #fixedbutton {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-  }
-</style>
-
 <body>
-  <md-toolbar class="md-theme-indigo" style="position: fixed;">
+  <md-toolbar class="md-theme-indigo" class="toolbar-fixed">
     <h1 class="md-toolbar-tools">To-Do</h1>
   </md-toolbar>
 
-  <div class="topblock"></div>
   <div layout="row" layout-wrap  ng-controller="MainCtrl">
     <div flex="25" >
       <div layout="row" layout-wrap>
@@ -40,25 +14,25 @@
         </div>
         <div flex="50">
           <md-content>
-            <md-list style="padding-top: 8px; width: 220px; position: fixed;">
+            <md-list class="navLeft-fixed">
               <md-divider></md-divider>
               <md-list-item ng-click="filters.done=false;filterCategory.category='None';section.sec='Inbox'">
                 <md-icon>inbox</md-icon>
                 <p>Inbox</p>
-                <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: false} | filter:{category: 'None'}:true).length}}</h5>
+                <h5 class="mainOptions-navFixed">{{(task | filter:{done: false} | filter:{category: 'None'}:true).length}}</h5>
               </md-list-item>
               <md-list-item ng-click="filters.done=true;filterCategory.category='';section.sec='Completed'">
                 <md-icon>done</md-icon>
                 <p>Completed</p>
-                <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: true} | filter:{category: ''}).length}}</h5>
+                <h5 class="mainOptions-navFixed">{{(task | filter:{done: true} | filter:{category: ''}).length}}</h5>
               </md-list-item>
               <md-divider></md-divider>
-              <h5 style="color:#999999; margin: 16px">Categories</h5>
+              <h5 class="secundaryOptions-navFixed">Categories</h5>
               <md-divider></md-divider>
               <md-list-item ng-repeat="category in categories" ng-click="filterCategory.category=category.cat;filters.done=false;section.sec=category.cat">
                 <div layout="row">
                   <p>{{category.cat}}</p>
-                  <h5 style="color:#999999; margin-left: 10px">{{(task | filter:{done: false} | filter:{category: category.cat}:true).length}}</h5>
+                  <h5 class="mainOptions-navFixed">{{(task | filter:{done: false} | filter:{category: category.cat}:true).length}}</h5>
                 </div>
                 <md-icon class="md-secondary" ng-click="editCategory(category);toggleRight3()" ng-hide="isOpenRight3()" aria-label="options" >more_horiz</md-icon>
               </md-list-item>
@@ -95,7 +69,7 @@
           </div>
           <div flex="90">
             <div layout="column" ng-cloak class="md-inline-form">
-              <div layout="row" style="padding-top: 8px;">
+              <div layout="row" class="divTop-tasks">
                 <md-subheader class="md-no-sticky" flex>{{section.sec}}</md-subheader>
                 <div layout layout-sm="column">
                   <md-subheader class="md-no-sticky">Remove Completed</md-subheader>
@@ -118,7 +92,7 @@
                     </div>
                     <md-icon class="md-secondary" ng-click="editTask(task);toggleRight()" ng-hide="isOpenRight()" aria-label="options" >more_horiz</md-icon>
                     <div class="md-list-item-text">
-                      <p align=right style="padding-right: 40px;">{{task.date | date}}</p>
+                      <p align=right class="dateFormat-list">{{task.date | date}}</p>
                     </div>
                     <md-divider></md-divider>
                   </md-list-item>
@@ -130,7 +104,7 @@
                     </div>
                     <md-icon class="md-secondary" ng-click="editTask(task);toggleRight()" ng-hide="isOpenRight()" aria-label="options" >more_horiz</md-icon>
                     <div class="md-list-item-text">
-                      <p align=right style="padding-right: 40px;">{{task.date | date}}</p>
+                      <p align=right class="dateFormat-list">{{task.date | date}}</p>
                     </div>
                     <md-divider></md-divider>
                   </md-list-item>
