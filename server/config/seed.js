@@ -11,29 +11,29 @@ var Category = require('../api/category/category.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
-      title: 'Hacer tarea de web 1',
+      title: 'Hacer tarea de web ',
       description: 'Desarrollar una aplicacion web para la clase',
+      date: new Date(2015, 11, 10),
+      category: 'Personal',
+      done: false
+    },
+    {
+      title: 'Estudiar para finales',
+      description: 'Seis examenes finales y vacaciones',
       date: '',
       category: 'Personal',
       done: false
     },
     {
-      title: 'Jugar xbox 2',
-      description: 'Jugr el miercoles por la tarde',
-      date: '',
-      category: 'Personal',
-      done: false
-    },
-    {
-      title: 'Jugar xbox 3',
-      description: 'Jugr el miercoles por la tarde',
+      title: 'Viajar',
+      description: 'Salir de viaje',
       date: '',
       category: 'None',
       done: false
     },
     {
-      title: 'Jugar xbox 4',
-      description: 'Jugr el miercoles por la tarde',
+      title: 'Vacaciones',
+      description: 'Disfrutar vacaciones',
       date: new Date(2015, 11, 10),
       category: 'None',
       done: false
