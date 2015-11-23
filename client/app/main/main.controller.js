@@ -76,6 +76,9 @@ angular
         date: task.date,
         category: task.category
       });
+      $http.get('/api/things').success(function(awesomeThings) {
+        $scope.task = awesomeThings;
+      });
       $scope.originalTask.title = task.title;
       $scope.originalTask.description = task.description;
       $scope.originalTask.date = task.date;
@@ -130,6 +133,9 @@ angular
         }
         $http.put('/api/categorys/' + $scope.originalCategory._id, {
           cat: category.cat
+        });
+        $http.get('/api/categorys').success(function(awesomeThings) {
+          $scope.categories = awesomeThings;
         });
         $scope.originalCategory.cat = category.cat;
         $scope.originalCategory = undefined;
