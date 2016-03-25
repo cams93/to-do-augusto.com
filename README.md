@@ -1,2 +1,3 @@
 https://todo-carlos.herokuapp.com/
-Diseño y desarrollo de una aplicación web para manejo de Tareas
+
+Design and developement of a web page app to create edit and manage your tasks
